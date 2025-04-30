@@ -24,9 +24,9 @@ public class App {
         //JOptionPane.showInputDialog esse código serve para abrir uma caixa de texto na aba Windows. O JOptionPane é string.
         // "null" centraliza na tela
         JOptionPane.showMessageDialog(null, "Você escolheu:"+opcao, "JStatistics",JOptionPane.DEFAULT_OPTION);
-        System.out.println("\t# \t# \t JStatistics \t # \t# \t");
-        System.out.println("Qual o conjunto de dados utilizado: \n 1- populacional \n 2- amostral");
-        opcao = leia.nextInt();
+        //System.out.println("\t# \t# \t JStatistics \t # \t# \t");
+        //System.out.println("Qual o conjunto de dados utilizado: \n 1- populacional \n 2- amostral");
+        //opcao = leia.nextInt();
 
         String opcaoVariavel = JOptionPane.showInputDialog("Que tipo de variável você deseja cadastrar: \n 1- Quantitativa \n 2- Qualitativa ");
         int opVariavel = Integer.parseInt(opcaoVariavel);
