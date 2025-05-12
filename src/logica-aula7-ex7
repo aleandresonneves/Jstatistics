@@ -1,0 +1,151 @@
+import javax.swing.JOptionPane;
+
+public class Jardim {
+
+    public static void main(String[] args) {
+        boolean continuar = true;  // Variável de controle do loop
+
+        while (continuar) {
+            JOptionPane.showMessageDialog(null, "Alô, Jardim!");
+
+            // Coleta dados do cliente
+            String nomeCliente = JOptionPane.showInputDialog(null, "Digite seu nome:");
+            if (nomeCliente == null) {
+                JOptionPane.showMessageDialog(null, "Operação cancelada pelo usuário");
+                return;
+            }
+
+            String enderecoCliente = JOptionPane.showInputDialog(null, "Digite o seu endereço:");
+            if (enderecoCliente == null) {
+                JOptionPane.showMessageDialog(null, "Operação cancelada!");
+                return;
+            }
+
+            // --- Adicionando o cálculo da área do local ---
+            String tipoLocal = JOptionPane.showInputDialog(null,
+                    "De qual tipo de local você gostaria de calcular a área?\n" +
+                            "1 - Retângulo/Quadrado\n" +
+                            "2 - Círculo\n" +
+                            "3 - Triângulo (base e altura)");
+
+            double area = 0;
+
+            if (tipoLocal != null) {
+                try {
+                    int escolha = Integer.parseInt(tipoLocal);
+
+                    switch (escolha) {
+                        case 1: // Retângulo/Quadrado
+                            String larguraStr = JOptionPane.showInputDialog(null, "Digite a largura:");
+                            String comprimentoStr = JOptionPane.showInputDialog(null, "Digite o comprimento:");
+                            if (larguraStr != null && comprimentoStr != null) {
+                                double largura = Double.parseDouble(larguraStr);
+                                double comprimento = Double.parseDouble(comprimentoStr);
+                                area = largura * comprimento;
+                                JOptionPane.showMessageDialog(null, "A área do retângulo/quadrado é: " + area);
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Cálculo da área cancelado.");
+                            }
+                            break;
+                        case 2: // Círculo
+                            String raioStr = JOptionPane.showInputDialog(null, "Digite o raio:");
+                            if (raioStr != null) {
+                                double raio = Double.parseDouble(raioStr);
+                                area = Math.PI * Math.pow(raio, 2);
+                                JOptionPane.showMessageDialog(null, "A área do círculo é: " + String.format("%.2f", area));
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Cálculo da área cancelado.");
+                            }
+                            break;
+                        case 3: // Triângulo
+                            String baseStr = JOptionPane.showInputDialog(null, "Digite a base:");
+                            String alturaStr = JOptionPane.showInputDialog(null, "Digite a altura:");
+                            if (baseStr != null && alturaStr != null) {
+                                double base = Double.parseDouble(baseStr);
+                                double altura = Double.parseDouble(alturaStr);
+                                area = (base * altura) / 2;
+                                JOptionPane.showMessageDialog(null, "A área do triângulo é: " + area);
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Cálculo da área cancelado.");
+                            }
+                            break;
+                        default:
+                            JOptionPane.showMessageDialog(null, "Opção inválida para o cálculo da área.");
+                            break;
+                    }
+
+                    // Classificar o tamanho do jardim
+                    if (area >= 0) {
+                        String tamanhoJardim;
+                        double limitePequeno = 50.0; // Defina o limite para considerar um jardim pequeno (em metros quadrados)
+
+                        if (area > limitePequeno) {
+                            tamanhoJardim = "Grande";
+                        } else {
+                            tamanhoJardim = "Pequeno";
+                        }
+                        JOptionPane.showMessageDialog(null, "O jardim é classificado como: " + tamanhoJardim);
+                    }
+
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Entrada inválida. Por favor, digite um número.");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Cálculo da área cancelado.");
+            }
+
+            // --- Adicionando a classificação do tipo de serviço ---
+            String tipoServicoStr = JOptionPane.showInputDialog(null,
+                    "Quantos serviços você deseja contratar?\n" +
+                            "1 - Jardinagem Básica\n" +
+                            "2 - Paisagismo\n" +
+                            "3 - Manutenção de Piscina\n" +
+                            "4 - Limpeza de Terreno\n" +
+                            "Digite a quantidade de serviços:");
+
+            int quantidadeServicos = 0;
+            if (tipoServicoStr != null) {
+                try {
+                    quantidadeServicos = Integer.parseInt(tipoServicoStr);
+                    double valorTotal = 0;
+                    double valorPorServico = 100.0; // Definindo o valor fixo por serviço
+
+                    // Calculando o valor total dos serviços
+                    valorTotal = valorPorServico * quantidadeServicos;
+
+                    // Aplica desconto fidelidade com base na quantidade de serviços
+                    double desconto = 0;
+                    if (quantidadeServicos >= 3) {
+                        desconto = 0.15; // 15% de desconto se o cliente contratar 3 ou mais serviços
+                    } else if (quantidadeServicos >= 2) {
+                        desconto = 0.10; // 10% de desconto se o cliente contratar 2 serviços
+                    }
+
+                    // Calculando o valor com desconto
+                    double valorComDesconto = valorTotal * (1 - desconto);
+
+                    JOptionPane.showMessageDialog(null, "Você escolheu " + quantidadeServicos + " serviços.\n" +
+                            "Valor total sem desconto: R$ " + valorTotal + "\n" +
+                            "Desconto aplicado: " + (desconto * 100) + "%\n" +
+                            "Valor com desconto: R$ " + valorComDesconto);
+
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Opção de serviço inválida. Por favor, digite um número.");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Nenhum tipo de serviço selecionado.");
+            }
+
+            // Exibe os dados do cliente
+            JOptionPane.showMessageDialog(null, "Dados do cliente:\nNome: " + nomeCliente + "\nEndereço: " + enderecoCliente);
+
+            // Pergunta se o usuário deseja continuar ou sair
+            String resposta = JOptionPane.showInputDialog(null, "Deseja realizar outra operação? (Digite 'sair' para sair ou qualquer tecla para continuar)");
+            if (resposta != null && resposta.equalsIgnoreCase("sair")) {
+                continuar = false;  // Finaliza o loop se o usuário digitar "sair"
+            }
+        }
+
+        JOptionPane.showMessageDialog(null, "Programa encerrado. Até logo!");
+    }
+}
